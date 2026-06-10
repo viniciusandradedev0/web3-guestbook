@@ -31,3 +31,6 @@ dist-ssr
 artifacts/
 cache/
 typechain-types/
+
+# Claude Code local settings
+.claude/settings.local.json
