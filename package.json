@@ -35,5 +35,11 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12"
+  },
+  "allowScripts": {
+    "bufferutil@4.1.0": true,
+    "esbuild@0.28.0": true,
+    "keccak@3.0.4": true,
+    "utf-8-validate@5.0.10": true
   }
 }
