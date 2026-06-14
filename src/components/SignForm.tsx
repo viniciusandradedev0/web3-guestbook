@@ -1,15 +1,26 @@
 import { useEffect, useRef } from 'react'
-import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { BaseError } from 'viem'
 import { GUESTBOOK_ADDRESS, GUESTBOOK_ABI } from '../config/contract'
+
+function friendlyError(e: unknown): string {
+  if (e instanceof BaseError) return e.shortMessage
+  if (e instanceof Error) return e.message
+  return 'Algo deu errado. Tente novamente.'
+}
 
 export function SignForm({ onSigned }: { onSigned: () => void }) {
   const formRef = useRef<HTMLFormElement>(null)
 
+  const { chain } = useAccount()
   const { writeContract, data: txHash, isPending, error } = useWriteContract()
 
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
     hash: txHash,
   })
+
+  const explorerUrl = chain?.blockExplorers?.default?.url
+  const txUrl = txHash && explorerUrl ? `${explorerUrl}/tx/${txHash}` : undefined
 
   // Só após a confirmação on-chain limpamos o form e atualizamos a lista.
   // (o onSuccess do writeContract dispara no envio da tx, antes da entrada
@@ -66,8 +77,17 @@ export function SignForm({ onSigned }: { onSigned: () => void }) {
         {!isPending && !isConfirming && 'Assinar'}
       </button>
 
-      {isSuccess && <p className="success">Assinatura registrada na blockchain!</p>}
-      {error && <p className="error">Erro: {error.message}</p>}
+      {isSuccess && (
+        <p className="success">
+          Assinatura registrada na blockchain!{' '}
+          {txUrl && (
+            <a href={txUrl} target="_blank" rel="noreferrer">
+              Ver no explorer ↗
+            </a>
+          )}
+        </p>
+      )}
+      {error && <p className="error">Erro: {friendlyError(error)}</p>}
     </form>
   )
 }

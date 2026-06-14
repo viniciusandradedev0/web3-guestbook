@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useReadContract } from 'wagmi'
 import { GUESTBOOK_ADDRESS, GUESTBOOK_ABI } from '../config/contract'
+import { Identity } from './Identity'
 
 type Entry = {
   signer: `0x${string}`
@@ -32,12 +33,10 @@ export function EntryList({ refetchSignal }: { refetchSignal: number }) {
       <h2>Entradas ({entries.length})</h2>
       <ul>
         {[...entries].reverse().map((entry: Entry, i) => (
-          <li key={i} className="entry-card">
+          <li key={`${entry.signer}-${entry.timestamp}-${i}`} className="entry-card">
             <div className="entry-header">
               <strong>{entry.name}</strong>
-              <span className="entry-address">
-                {entry.signer.slice(0, 6)}...{entry.signer.slice(-4)}
-              </span>
+              <Identity address={entry.signer} />
             </div>
             <p>{entry.message}</p>
             <time>{new Date(Number(entry.timestamp) * 1000).toLocaleString('pt-BR')}</time>

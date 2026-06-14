@@ -3,6 +3,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import { SignForm } from './components/SignForm'
 import { EntryList } from './components/EntryList'
+import { NetworkBanner } from './components/NetworkBanner'
 import './App.css'
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
         </div>
         <ConnectButton />
       </header>
+
+      <NetworkBanner />
 
       {isConnected && (
         <SignForm onSigned={handleSigned} />

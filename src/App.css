@@ -100,6 +100,18 @@ header p {
   margin: 0;
 }
 
+.success a {
+  margin-left: 0.25rem;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.success a:hover {
+  text-decoration: none;
+}
+
 .error {
   color: #f87171;
   font-size: 0.875rem;
@@ -140,13 +152,35 @@ header p {
   font-size: 1rem;
 }
 
-.entry-address {
-  font-size: 0.75rem;
+.identity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+}
+
+.identity-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+}
+
+.identity-avatar--blank {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  box-shadow: inset 0 0 0 1px rgba(124, 58, 237, 0.35);
+}
+
+.identity-label {
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  font-size: 0.875rem;
   color: #7c3aed;
-  font-family: monospace;
-  background: #0f172a;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .entry-card p {
@@ -164,4 +198,42 @@ header p {
   text-align: center;
   color: #475569;
   padding: 2rem 0;
+}
+
+.network-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1.5rem;
+  border: 1px solid #f59e0b;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.1);
+  color: #fbbf24;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.network-banner button {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #7c3aed;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.network-banner button:hover:not(:disabled) {
+  background: #6d28d9;
+}
+
+.network-banner button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
