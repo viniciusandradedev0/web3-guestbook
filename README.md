@@ -6,6 +6,15 @@ Projeto feito para aprender o stack moderno de frontend Web3: **wagmi**, **viem*
 
 ---
 
+## Demo ao vivo
+
+- **App:** [web3-guestbook-xi.vercel.app](https://web3-guestbook-xi.vercel.app) — conecte sua carteira na rede Sepolia e deixe sua mensagem
+- **Contrato:** [0x9BfF3FE5220A94C876d8054294b4F38311E441EE no Etherscan (Sepolia)](https://sepolia.etherscan.io/address/0x9BfF3FE5220A94C876d8054294b4F38311E441EE)
+
+> A leitura e visualização das mensagens funciona sem carteira. Para assinar o livro de visitas, é preciso ter MetaMask (ou outra carteira) configurada na rede Sepolia e com algum SepoliaETH de teste para pagar o gas.
+
+---
+
 ## Stack
 
 | Camada | Tecnologia |
@@ -62,7 +71,7 @@ web3-guestbook/
 
 - Node.js 22+ (para compilar o contrato com Hardhat 3)
 - MetaMask instalado no navegador
-- Contas no [Alchemy](https://alchemy.com) e [WalletConnect Cloud](https://cloud.walletconnect.com)
+- Contas no [Alchemy](https://alchemy.com) e na [Reown Cloud](https://cloud.reown.com) (cloud.reown.com, antigo WalletConnect Cloud)
 
 > O frontend (Vite) funciona com Node 20+. Apenas o Hardhat requer Node 22. O
 > projeto tem um `.nvmrc` com a versão 22 — se você usa [nvm](https://github.com/nvm-sh/nvm),
@@ -133,6 +142,11 @@ Importe uma das contas de teste usando a private key exibida no terminal do `har
 ---
 
 ## Deploy na Sepolia Testnet
+
+> O contrato deste projeto já está deployado em produção na Sepolia, no endereço
+> [`0x9BfF3FE5220A94C876d8054294b4F38311E441EE`](https://sepolia.etherscan.io/address/0x9BfF3FE5220A94C876d8054294b4F38311E441EE),
+> e o frontend está publicado em [web3-guestbook-xi.vercel.app](https://web3-guestbook-xi.vercel.app).
+> Os passos abaixo são para quem quiser fazer seu próprio deploy/fork do projeto.
 
 1. Consiga ETH de teste no [Sepolia Faucet](https://sepoliafaucet.com)
 2. Preencha `PRIVATE_KEY` e `ALCHEMY_SEPOLIA_URL` no `.env`

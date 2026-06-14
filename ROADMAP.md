@@ -12,12 +12,21 @@ bem-acabado.
 
 ## ▶️ Continue daqui (próximo passo principal)
 
-**Deixar o projeto LIVE: deploy do contrato na Sepolia + frontend na Vercel.**
-É o item de maior impacto pra portfólio — um link clicável onde qualquer pessoa
-conecta a carteira e testa. Detalhes na seção [🎯 → 2. Deixar o projeto LIVE](#2-deixar-o-projeto-live-o-diferencial-n-1).
+**O projeto já está LIVE** 🎉 — contrato deployado na Sepolia
+([`0x9BfF3FE5220A94C876d8054294b4F38311E441EE`](https://sepolia.etherscan.io/address/0x9BfF3FE5220A94C876d8054294b4F38311E441EE))
+e frontend publicado na Vercel (https://web3-guestbook-xi.vercel.app).
 
-O bloco "web3-nativo" do frontend (ENS, rede errada, feedback de tx) já está
-pronto. Falta só subir pro ar e escrever o README.
+O que falta agora é fechar os últimos testes manuais do
+[Plano de testes em SEPOLIA_DEPLOY.md](./SEPOLIA_DEPLOY.md#plano-de-testes-depois-do-deploy-na-sepolia):
+- Trocar de rede na carteira (ex.: voltar pra Ethereum Mainnet) e confirmar que o
+  `NetworkBanner` aparece com o botão de trocar para Sepolia (seção 3).
+- Rejeitar uma transação no MetaMask e confirmar que aparece a mensagem amigável
+  do `friendlyError()`, não o erro bruto (seção 6).
+- Conferir que o link da transação abre a tx real no Etherscan Sepolia (seção 4).
+
+Depois disso, o essencial está concluído. Se quiser continuar evoluindo o
+projeto, dá uma olhada na seção [✨ Opcional](#-opcional--se-quiser-deixar-mais-redondo)
+— nada ali é obrigatório, é só pra deixar mais redondo.
 
 ---
 
@@ -30,6 +39,10 @@ pronto. Falta só subir pro ar e escrever o README.
 - [x] Migração para Hardhat 3 e correção do fallback do WalletConnect projectId
 - [x] **Bugs P0 corrigidos:** refetch no `useEffect` (não no render) e atualização da
       lista amarrada à confirmação on-chain (form não-controlado via `FormData`)
+- [x] **Contrato deployado na Sepolia** e testado de ponta a ponta no navegador
+      (assinatura real, entrada na lista, confirmado também via RPC)
+- [x] **Frontend publicado na Vercel**, com Project ID real do Reown Cloud para o
+      WalletConnect — projeto 100% no ar em https://web3-guestbook-xi.vercel.app
 
 ---
 
@@ -51,35 +64,37 @@ projeto redondo.
 - [x] **Erros amigáveis:** `friendlyError()` usa `shortMessage` do viem (ex.:
       "User rejected the request.") em vez da mensagem crua.
 
-### 2. Deixar o projeto LIVE (o diferencial nº 1)
+### 2. Deixar o projeto LIVE (o diferencial nº 1) ✅ CONCLUÍDO
 
-**Parte A — contrato na Sepolia** (precisa de Node 26: `source ~/.nvm/nvm.sh && nvm use 26`)
-- [ ] Criar conta no **Alchemy** → copiar a URL HTTPS da app Sepolia para `ALCHEMY_SEPOLIA_URL` no `.env`
-- [ ] Carteira de DEV: garantir que `PRIVATE_KEY` no `.env` é de uma conta só pra teste
+**Parte A — contrato na Sepolia**
+- [x] Criar conta no **Alchemy** → copiar a URL HTTPS da app Sepolia para `ALCHEMY_SEPOLIA_URL` no `.env`
+- [x] Carteira de DEV: garantir que `PRIVATE_KEY` no `.env` é de uma conta só pra teste
       (a conta #0 do Hardhat que está lá **não** tem ETH na Sepolia — usar uma carteira real de teste)
-- [ ] Pegar ETH de teste num **faucet Sepolia** (ex.: sepoliafaucet.com / faucet do Alchemy)
-- [ ] Deploy: `npx hardhat run scripts/deploy.ts --network sepolia`
-- [ ] Copiar o endereço impresso para `VITE_CONTRACT_ADDRESS` e setar `VITE_CHAIN_ID=11155111`
-- [ ] (Opcional) Verificar o contrato no **Etherscan** Sepolia
+- [x] Pegar ETH de teste num **faucet Sepolia** (ex.: sepoliafaucet.com / faucet do Alchemy)
+- [x] Deploy: `npx hardhat run scripts/deploy.ts --network sepolia`
+- [x] Copiar o endereço impresso para `VITE_CONTRACT_ADDRESS` e setar `VITE_CHAIN_ID=11155111`
+- [x] Contrato no ar em
+      [`0x9BfF3FE5220A94C876d8054294b4F38311E441EE`](https://sepolia.etherscan.io/address/0x9BfF3FE5220A94C876d8054294b4F38311E441EE)
+      (Sepolia Etherscan)
 
 **Parte B — frontend na Vercel**
-- [ ] Criar projeto no **WalletConnect Cloud** → `VITE_WALLETCONNECT_PROJECT_ID`
-      (sem isso real, o RainbowKit usa o fallback `placeholder` e o WalletConnect não funciona de verdade)
-- [ ] Importar o repo na **Vercel** (framework Vite detectado automaticamente)
-- [ ] Configurar as envs na Vercel: `VITE_CONTRACT_ADDRESS`, `VITE_CHAIN_ID=11155111`,
-      `VITE_WALLETCONNECT_PROJECT_ID` (as `VITE_*` são as únicas que o front precisa;
-      `PRIVATE_KEY`/`ALCHEMY_SEPOLIA_URL` são só de deploy, **não** vão pra Vercel)
-- [ ] Testar o fluxo completo na Sepolia com a MetaMask, já na URL pública
-- [ ] Pegar o link da demo + o link do contrato no Etherscan (vão pro README)
+- [x] Criar projeto no **Reown Cloud** (ex-WalletConnect Cloud) → `VITE_WALLETCONNECT_PROJECT_ID`
+      real configurado (`ce14d2d83134b7437981f470dc442410`)
+- [x] Importar o repo na **Vercel** (framework Vite detectado automaticamente)
+- [x] Configurar as envs na Vercel: `VITE_CONTRACT_ADDRESS`, `VITE_CHAIN_ID=11155111`,
+      `VITE_WALLETCONNECT_PROJECT_ID` (em "Production and Preview")
+- [x] Testar o fluxo completo na Sepolia com a MetaMask, já na URL pública
+- [x] App publicado e funcionando em https://web3-guestbook-xi.vercel.app
 
 > ⚠️ Cuidado de segurança: nunca commitar `.env` (já está no `.gitignore`). Na Vercel,
 > só configure as variáveis `VITE_*` — a `PRIVATE_KEY` jamais deve ir para o hosting.
 
 ### 3. README de portfólio (a primeira coisa que olham)
 - [ ] Screenshot ou GIF do app funcionando
-- [ ] Link da **demo ao vivo** + link do **contrato no Etherscan**
-- [ ] Stack usada e o que o projeto demonstra (connect wallet, read, write/tx)
-- [ ] Instruções de "como rodar localmente"
+- [x] Link da **demo ao vivo** (https://web3-guestbook-xi.vercel.app) + link do
+      **contrato no Etherscan** (sendo adicionados ao README)
+- [x] Stack usada e o que o projeto demonstra (connect wallet, read, write/tx)
+- [x] Instruções de "como rodar localmente"
 
 ---
 
