@@ -16,18 +16,14 @@
 
   --shadow-glow: 0 0 60px -15px rgba(124, 58, 237, 0.45);
   --shadow-card: 0 8px 30px -12px rgba(0, 0, 0, 0.6);
+}
 
-  --animate-gradient: gradient-shift 8s ease infinite;
-
-  @keyframes gradient-shift {
-    0%,
-    100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
+@utility glass-card {
+  border-radius: var(--radius-2xl);
+  border: 1px solid color-mix(in oklab, var(--color-border) 60%, transparent);
+  background-color: color-mix(in oklab, var(--color-surface) 60%, transparent);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(12px);
 }
 
 * {

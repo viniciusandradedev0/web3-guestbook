@@ -40,7 +40,9 @@ export function EntryList({ refetchSignal }: { refetchSignal: number }) {
     )
   }
 
-  const ordered = [...entries].reverse()
+  const ordered = entries
+    .map((entry, originalIndex) => ({ entry, originalIndex }))
+    .reverse()
 
   return (
     <section>
@@ -57,19 +59,17 @@ export function EntryList({ refetchSignal }: { refetchSignal: number }) {
         className="m-0 flex list-none flex-col gap-4 p-0"
       >
         <AnimatePresence initial={false}>
-          {ordered.map((entry: Entry, i) => (
+          {ordered.map(({ entry, originalIndex }: { entry: Entry; originalIndex: number }) => (
             <motion.li
-              key={`${entry.signer}-${entry.timestamp}-${i}`}
+              key={`${entry.signer}-${originalIndex}`}
               layout
               variants={{
                 hidden: { opacity: 0, y: 16 },
                 visible: { opacity: 1, y: 0 },
               }}
-              initial="hidden"
-              animate="visible"
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="rounded-2xl border border-border/60 bg-surface/60 p-4 shadow-card backdrop-blur-md sm:p-5"
+              className="glass-card p-4 sm:p-5"
             >
               <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                 <strong className="text-sm font-semibold text-text sm:text-base">
