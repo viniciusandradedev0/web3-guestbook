@@ -10,6 +10,17 @@ bem-acabado.
 
 ---
 
+## ▶️ Continue daqui (próximo passo principal)
+
+**Deixar o projeto LIVE: deploy do contrato na Sepolia + frontend na Vercel.**
+É o item de maior impacto pra portfólio — um link clicável onde qualquer pessoa
+conecta a carteira e testa. Detalhes na seção [🎯 → 2. Deixar o projeto LIVE](#2-deixar-o-projeto-live-o-diferencial-n-1).
+
+O bloco "web3-nativo" do frontend (ENS, rede errada, feedback de tx) já está
+pronto. Falta só subir pro ar e escrever o README.
+
+---
+
 ## ✅ Já feito
 - [x] Smart contract `Guestbook.sol` (`sign`, `getEntries`, `getEntryCount`, evento `Signed`)
 - [x] Frontend React 19 + Vite + Tailwind 4
@@ -41,13 +52,28 @@ projeto redondo.
       "User rejected the request.") em vez da mensagem crua.
 
 ### 2. Deixar o projeto LIVE (o diferencial nº 1)
-- [ ] Criar conta no Alchemy → `ALCHEMY_SEPOLIA_URL`
-- [ ] Criar projeto no WalletConnect Cloud → `VITE_WALLETCONNECT_PROJECT_ID`
-- [ ] Pegar ETH de teste num faucet Sepolia
-- [ ] Deploy do contrato: `npx hardhat run scripts/deploy.ts --network sepolia`
-- [ ] Atualizar `VITE_CONTRACT_ADDRESS` e verificar o contrato no Etherscan
-- [ ] Deploy do frontend na **Vercel** (ou Netlify), com as envs configuradas lá
-- [ ] Testar o fluxo completo na Sepolia com a MetaMask
+
+**Parte A — contrato na Sepolia** (precisa de Node 26: `source ~/.nvm/nvm.sh && nvm use 26`)
+- [ ] Criar conta no **Alchemy** → copiar a URL HTTPS da app Sepolia para `ALCHEMY_SEPOLIA_URL` no `.env`
+- [ ] Carteira de DEV: garantir que `PRIVATE_KEY` no `.env` é de uma conta só pra teste
+      (a conta #0 do Hardhat que está lá **não** tem ETH na Sepolia — usar uma carteira real de teste)
+- [ ] Pegar ETH de teste num **faucet Sepolia** (ex.: sepoliafaucet.com / faucet do Alchemy)
+- [ ] Deploy: `npx hardhat run scripts/deploy.ts --network sepolia`
+- [ ] Copiar o endereço impresso para `VITE_CONTRACT_ADDRESS` e setar `VITE_CHAIN_ID=11155111`
+- [ ] (Opcional) Verificar o contrato no **Etherscan** Sepolia
+
+**Parte B — frontend na Vercel**
+- [ ] Criar projeto no **WalletConnect Cloud** → `VITE_WALLETCONNECT_PROJECT_ID`
+      (sem isso real, o RainbowKit usa o fallback `placeholder` e o WalletConnect não funciona de verdade)
+- [ ] Importar o repo na **Vercel** (framework Vite detectado automaticamente)
+- [ ] Configurar as envs na Vercel: `VITE_CONTRACT_ADDRESS`, `VITE_CHAIN_ID=11155111`,
+      `VITE_WALLETCONNECT_PROJECT_ID` (as `VITE_*` são as únicas que o front precisa;
+      `PRIVATE_KEY`/`ALCHEMY_SEPOLIA_URL` são só de deploy, **não** vão pra Vercel)
+- [ ] Testar o fluxo completo na Sepolia com a MetaMask, já na URL pública
+- [ ] Pegar o link da demo + o link do contrato no Etherscan (vão pro README)
+
+> ⚠️ Cuidado de segurança: nunca commitar `.env` (já está no `.gitignore`). Na Vercel,
+> só configure as variáveis `VITE_*` — a `PRIVATE_KEY` jamais deve ir para o hosting.
 
 ### 3. README de portfólio (a primeira coisa que olham)
 - [ ] Screenshot ou GIF do app funcionando
