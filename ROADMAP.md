@@ -114,12 +114,12 @@ Só anotações, caso um dia bata a vontade de evoluir. **Não precisa pra portf
 
 ## 🛠️ Notas técnicas (importante no dia a dia)
 
-- **Node:** o projeto exige **Node 20.19+ / 22+** (Vite e Hardhat 3). O terminal
-  abre com Node 18 do sistema → ative o Node 26 antes de qualquer comando:
+- **Node:** o projeto exige **Node 22+** (Vite e Hardhat 3). Já existe um
+  `.nvmrc` (= `22`) e `"engines": { "node": ">=22" }` no `package.json` — se o
+  terminal abrir com uma versão diferente, ative a correta com:
   ```bash
-  source ~/.nvm/nvm.sh && nvm use 26
+  source ~/.nvm/nvm.sh && nvm use
   ```
-  *(Recomendado fixar com um `.nvmrc` = `26` e `"engines": { "node": ">=22" }` no `package.json`.)*
 
 - **Rodar local:** dois processos, ambos no Node 26, em terminais separados:
   | Terminal | Comando | O quê |

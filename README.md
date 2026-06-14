@@ -64,7 +64,9 @@ web3-guestbook/
 - MetaMask instalado no navegador
 - Contas no [Alchemy](https://alchemy.com) e [WalletConnect Cloud](https://cloud.walletconnect.com)
 
-> O frontend (Vite) funciona com Node 20+. Apenas o Hardhat requer Node 22.
+> O frontend (Vite) funciona com Node 20+. Apenas o Hardhat requer Node 22. O
+> projeto tem um `.nvmrc` com a versão 22 — se você usa [nvm](https://github.com/nvm-sh/nvm),
+> rode `nvm use` na raiz do projeto para ativar a versão correta automaticamente.
 
 ### 1. Instalar dependências
 
