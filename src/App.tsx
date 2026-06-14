@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import { SignForm } from './components/SignForm'
@@ -8,6 +8,7 @@ import './App.css'
 function App() {
   const { isConnected } = useAccount()
   const [refetchSignal, setRefetchSignal] = useState(0)
+  const handleSigned = useCallback(() => setRefetchSignal((s) => s + 1), [])
 
   return (
     <main className="container">
@@ -20,7 +21,7 @@ function App() {
       </header>
 
       {isConnected && (
-        <SignForm onSigned={() => setRefetchSignal((s) => s + 1)} />
+        <SignForm onSigned={handleSigned} />
       )}
 
       {!isConnected && (

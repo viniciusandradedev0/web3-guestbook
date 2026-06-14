@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useReadContract } from 'wagmi'
 import { GUESTBOOK_ADDRESS, GUESTBOOK_ABI } from '../config/contract'
 
@@ -15,8 +16,10 @@ export function EntryList({ refetchSignal }: { refetchSignal: number }) {
     functionName: 'getEntries',
   })
 
-  // Re-fetch quando refetchSignal muda (após uma nova assinatura)
-  if (refetchSignal) refetch()
+  // Re-fetch quando refetchSignal muda (após uma nova assinatura confirmada)
+  useEffect(() => {
+    if (refetchSignal) refetch()
+  }, [refetchSignal, refetch])
 
   if (isLoading) return <p>Carregando entradas...</p>
 
