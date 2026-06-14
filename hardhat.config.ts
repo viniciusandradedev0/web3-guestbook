@@ -1,19 +1,35 @@
-import { HardhatUserConfig } from 'hardhat/config'
-import '@nomicfoundation/hardhat-toolbox'
+import hardhatToolboxMochaEthersPlugin from '@nomicfoundation/hardhat-toolbox-mocha-ethers'
+import { configVariable, defineConfig } from 'hardhat/config'
 import 'dotenv/config'
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY ?? '0x' + '0'.repeat(64)
-const ALCHEMY_SEPOLIA_URL = process.env.ALCHEMY_SEPOLIA_URL ?? ''
-
-const config: HardhatUserConfig = {
-  solidity: '0.8.24',
-  networks: {
-    sepolia: {
-      url: ALCHEMY_SEPOLIA_URL,
-      accounts: [PRIVATE_KEY],
+export default defineConfig({
+  plugins: [hardhatToolboxMochaEthersPlugin],
+  solidity: {
+    profiles: {
+      default: {
+        version: '0.8.24',
+      },
+      production: {
+        version: '0.8.24',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
     },
-    hardhat: {},
   },
-}
-
-export default config
+  networks: {
+    hardhatMainnet: {
+      type: 'edr-simulated',
+      chainType: 'l1',
+    },
+    sepolia: {
+      type: 'http',
+      chainType: 'l1',
+      url: configVariable('ALCHEMY_SEPOLIA_URL'),
+      accounts: [configVariable('PRIVATE_KEY')],
+    },
+  },
+})
