@@ -1,14 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { BaseError } from 'viem'
 import { GUESTBOOK_ADDRESS, GUESTBOOK_ABI } from '../config/contract'
-
-function friendlyError(e: unknown): string {
-  if (e instanceof BaseError) return e.shortMessage
-  if (e instanceof Error) return e.message
-  return 'Algo deu errado. Tente novamente.'
-}
+import { friendlyError } from '../lib/friendlyError'
 
 export function SignForm({ onSigned }: { onSigned: () => void }) {
   const formRef = useRef<HTMLFormElement>(null)
@@ -59,7 +53,7 @@ export function SignForm({ onSigned }: { onSigned: () => void }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-      className="mb-8 flex flex-col gap-4 rounded-2xl border border-border/60 bg-surface/60 p-5 shadow-card backdrop-blur-md sm:p-6"
+      className="glass-card mb-8 flex flex-col gap-4 p-5 sm:p-6"
     >
       <h2 className="text-base font-semibold tracking-tight text-text sm:text-lg">
         Assinar o livro de visitas
@@ -93,24 +87,24 @@ export function SignForm({ onSigned }: { onSigned: () => void }) {
         disabled={busy}
         whileHover={busy ? undefined : { scale: 1.02 }}
         whileTap={busy ? undefined : { scale: 0.98 }}
-        className="self-start rounded-lg bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition-opacity disabled:cursor-not-allowed disabled:opacity-60 sm:text-base"
+        className="self-start rounded-lg bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition-[opacity,filter] enabled:hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60 sm:text-base"
       >
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span
-            key={buttonLabel}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.15 }}
-            className="inline-block"
-          >
-            {buttonLabel}
-          </motion.span>
-        </AnimatePresence>
+        {buttonLabel}
       </motion.button>
 
       <AnimatePresence mode="wait">
-        {isSuccess && (
+        {error ? (
+          <motion.p
+            key="error"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25 }}
+            className="m-0 text-sm text-danger"
+          >
+            Erro: {friendlyError(error)}
+          </motion.p>
+        ) : isSuccess ? (
           <motion.p
             key="success"
             initial={{ opacity: 0, height: 0 }}
@@ -131,19 +125,7 @@ export function SignForm({ onSigned }: { onSigned: () => void }) {
               </a>
             )}
           </motion.p>
-        )}
-        {error && (
-          <motion.p
-            key="error"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="m-0 text-sm text-danger"
-          >
-            Erro: {friendlyError(error)}
-          </motion.p>
-        )}
+        ) : null}
       </AnimatePresence>
     </motion.form>
   )

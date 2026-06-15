@@ -22,7 +22,7 @@ export function Identity({ address }: { address: `0x${string}` }) {
       ) : (
         <span
           aria-hidden
-          className="h-[22px] w-[22px] shrink-0 rounded-full border border-primary/35 bg-gradient-to-br from-surface to-background shadow-[inset_0_0_0_1px_rgba(124,58,237,0.35)]"
+          className="h-[22px] w-[22px] shrink-0 rounded-full border border-primary/35 bg-gradient-to-br from-surface to-background ring-1 ring-inset ring-primary/35"
         />
       )}
       <span className="overflow-hidden truncate font-mono text-sm text-primary">
