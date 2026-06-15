@@ -1,14 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { BaseError } from 'viem'
 import { GUESTBOOK_ADDRESS, GUESTBOOK_ABI } from '../config/contract'
-
-function friendlyError(e: unknown): string {
-  if (e instanceof BaseError) return e.shortMessage
-  if (e instanceof Error) return e.message
-  return 'Algo deu errado. Tente novamente.'
-}
+import { friendlyError } from '../lib/friendlyError'
 
 export function SignForm({ onSigned }: { onSigned: () => void }) {
   const formRef = useRef<HTMLFormElement>(null)
